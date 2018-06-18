@@ -48,9 +48,12 @@ app.controller('Login', function($scope, $location, $http){
 			data: data
 		}).then(function(success){
 			$scope.message = undefined;
+			$scope.error = undefined;
 			$location.path('/sensors');
 		}, function(err){
-			$scope.message = err.data.error;
+			//$scope.message = err.data.error;
+			$scope.message = undefined;
+			$scope.error = err.data.error;
 		});
 	};
 	
@@ -76,8 +79,11 @@ app.controller('Login', function($scope, $location, $http){
 			data: data
 		}).then(function(success){
 			$scope.message = "Register successful";
+			$scope.error = undefined;
 		}, function(err){
-			$scope.message = err.data.error;
+			//$scope.message = err.data.error;
+			$scope.message = undefined;
+			$scope.error = err.data.error;
 		});
 	};
 	

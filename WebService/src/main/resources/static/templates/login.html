@@ -9,7 +9,8 @@
 			<td>Password</td>
 			<td><input id="password" name="password" ng-model="pw" type="password"></td>
 		</tr>
-		<tr ng-show="message">{{message}}</tr>
+		<tr ng-show="message"><font color="green">{{message}}</font></tr>
+		<tr ng-show="error"><font color="red">{{error}}</font></tr>
 		<tr>
 			<td><button ng-click="login(user, pw)">Login</button></td>
 			<td><button ng-click="register(user, pw)">Register</button></td>
