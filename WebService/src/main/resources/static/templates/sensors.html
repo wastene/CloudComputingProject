@@ -1,0 +1,53 @@
+<div style="overflow:auto;">
+	<h1 style="float:left;">{{title}}</h1> 
+	<div style="float: left; margin-top: 33px; margin-left: 20px;">
+		<a href="" ng-click="refresh()" style="padding-left: 5px;"><i class="fa fa-refresh fa-lg"></i></a>
+		<a href="" ng-click="signout()" style="padding-left: 5px;"><i class="fa fa-sign-out fa-lg"></i></a>
+	</div>
+</div>	
+
+<div style="overflow:auto;">
+	<div style="float: left;">
+		<div ng-repeat="(key, host) in sensors" style="margin-bottom:50px; position:relative; width: auto; min-width: 250px; ">
+			<h4>{{host.serviceId}}</h4>
+			<p>{{host.host}}:{{host.port}}</p>
+			<a href="" ng-click="openAddSensor(host)" style="padding-left: 5px; position: absolute; right: 0; top: 0;"><i class="fa fa-plus fa-lg"></i></a>
+			<div ng-show="host.collapse">
+				<form>
+					<table>
+						<tr>
+							<td>Sensor-Name</td>
+							<td><input id="name" name="name" ng-model="name"></td>
+						</tr>
+						<tr>
+							<td>Unit</td>
+							<td><input id="unit" name="unit" ng-model="unit"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><button ng-click="addSensor(host, name, unit)">Add</button></td>
+						<tr>
+					</table>			
+				</form>
+				
+			</div>
+			<table style="border: 1px solid black;">
+				<colgroup>
+			    	<col width="60%">
+			    	<col width="30%">
+			    	<col width="10%">
+			  	</colgroup>
+				<tr>
+					<th>Name</th>
+					<th>Value</th>
+					<th>Unit</th>
+				</tr>
+				<tr ng-repeat="sensor in host.sensors">
+					<td>{{sensor.name}}</td>
+					<td>{{sensor.value}}</td>
+					<td>{{sensor.unit}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

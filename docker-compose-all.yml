@@ -1,0 +1,69 @@
+version: '3'
+services:
+    mysql:
+        image: mysql-account-db:latest
+        build:
+            context: ./MySQL
+
+    account:
+        image: account:latest
+        build:
+            context: ./Account
+        environment:
+            - spring.datasource.url=jdbc:mysql://mysql:3306/account
+        depends_on:
+            - mysql
+        ports: 
+            - "9000:9000"
+    
+    eureka:
+        image: eurekaserver:latest
+        build:
+            context: ./EurekaServer
+        ports:
+            - "8790:8790"
+
+    web:
+        image: web:latest
+        build:
+            context: ./WebService
+        environment:
+            - server.account.host=account
+            - server.account.port=9000
+            - server.eureka.host=eureka
+            - server.eureka.port=8790
+            - eureka.client.server-url.defaultZone=http://eureka:8790/eureka
+            - eureka.instance.hostname=eureka
+        depends_on:
+            - account
+            - eureka
+        ports:
+            - "8080:8080"
+
+    sensor1:
+        image: sensor:latest
+        build:
+            context: ./Sensor
+        environment:
+            - eureka.instance.hostname=eureka
+            - eureka.client.service-url.defaultZone=http://eureka:8790/eureka
+            - server.port=51142
+            - spring.application.name=Sensor1
+        depends_on:
+            - eureka
+        ports:
+            - "51142:51142"
+
+    sensor2:
+        image: sensor:latest
+        build:
+            context: ./Sensor
+        environment:
+            - eureka.instance.hostname=eureka
+            - eureka.client.service-url.defaultZone=http://eureka:8790/eureka
+            - server.port=51143
+            - spring.application.name=Sensor2
+        depends_on:
+            - eureka
+        ports:
+            - "51143:51143"
